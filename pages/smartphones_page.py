@@ -1,5 +1,6 @@
 import time
 
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -66,14 +67,14 @@ class SmartphonesPage(Base):
     # Methods (Steps)
 
     def select_smartphone(self):
-        """Выбор Смартфона"""
-        Logger.add_start_step(method="select_smartphone")
-        self.get_current_url()
-        self.driver.execute_script("window.scrollTo(0, 1200)")
-        time.sleep(5)
-        self.click_brand_button()
-        self.click_apple_filter()
-        self.click_memory_filter()
-        self.click_display_filter()
-        self.click_add_to_cart_button()
-        Logger.add_end_step(url=self.driver.current_url, method="select_smartphone")
+        with allure.step("Выбор Смартфона"):
+            Logger.add_start_step(method="select_smartphone")
+            self.get_current_url()
+            self.driver.execute_script("window.scrollTo(0, 1200)")
+            time.sleep(5)
+            self.click_brand_button()
+            self.click_apple_filter()
+            self.click_memory_filter()
+            self.click_display_filter()
+            self.click_add_to_cart_button()
+            Logger.add_end_step(url=self.driver.current_url, method="select_smartphone")

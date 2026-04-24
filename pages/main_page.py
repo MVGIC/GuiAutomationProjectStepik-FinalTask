@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -39,12 +40,12 @@ class MainPage(Base):
     # Methods (Steps)
 
     def select_smartphone_category(self):
-        """Переход в каталог Смартфонов"""
-        Logger.add_start_step(method="select_smartphone_category")
-        self.driver.get(self.url)
-        self.click_cookie_button()
-        self.driver.maximize_window()
-        self.get_current_url()
-        self.click_smartphone_button()
-        self.assert_url("https://pitergsm.ru/catalog/phones/")
-        Logger.add_end_step(url=self.driver.current_url, method="select_smartphone_category")
+        with allure.step("Переход в каталог Смартфонов"):
+            Logger.add_start_step(method="select_smartphone_category")
+            self.driver.get(self.url)
+            self.click_cookie_button()
+            self.driver.maximize_window()
+            self.get_current_url()
+            self.click_smartphone_button()
+            self.assert_url("https://pitergsm.ru/catalog/phones/")
+            Logger.add_end_step(url=self.driver.current_url, method="select_smartphone_category")

@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -62,11 +63,11 @@ class CartPage(Base):
     # Methods (Steps)
 
     def move_to_checkout_order(self):
-        """Проверка добавленного в корзину товара и переход к оформлению"""
-        Logger.add_start_step(method="move_to_checkout_order")
-        self.get_current_url()
-        self.assert_cart_title()
-        self.assert_cart_product_name()
-        # self.assert_total_price()  # цена меняется динамически, проверяется при подтверждении покупки
-        self.click_move_checkout_button()
-        Logger.add_end_step(url=self.driver.current_url, method="move_to_checkout_order")
+        with allure.step("Проверка добавленного в корзину товара и переход к оформлению"):
+            Logger.add_start_step(method="move_to_checkout_order")
+            self.get_current_url()
+            self.assert_cart_title()
+            self.assert_cart_product_name()
+            # self.assert_total_price()  # цена меняется динамически, проверяется при подтверждении покупки
+            self.click_move_checkout_button()
+            Logger.add_end_step(url=self.driver.current_url, method="move_to_checkout_order")

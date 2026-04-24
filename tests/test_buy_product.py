@@ -1,3 +1,4 @@
+import allure
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -9,9 +10,9 @@ from pages.popup_page import PopupPage
 from pages.smartphones_page import SmartphonesPage
 
 
+@allure.description("""Тест по покупке смартфона включает в себя:
+            переход на страницу сайта, выбор товара, добавление товара в корзину, подтверждение покупки.""")
 def test_buy_smartphone():
-    """Тест по покупке смартфона включает в себя:
-            переход на страницу сайта, выбор товара, добавление товара в корзину, подтверждение покупки."""
     options = webdriver.ChromeOptions()
     options.add_experimental_option("detach", True)
     options.add_argument("--incognito")  # или options.add_argument("--guest")

@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -58,11 +59,11 @@ class PopupPage(Base):
     # Methods (Steps)
 
     def move_to_cart(self):
-        """Проверка выбранного товара и Переход в корзину"""
-        Logger.add_start_step(method="move_to_cart")
-        self.get_current_url()
-        self.assert_popup_title()
-        self.assert_product_name()
-        # self.assert_product_price_popup()  # цена меняется динамически, проверяется при подтверждении покупки
-        self.click_move_to_cart_button()
-        Logger.add_end_step(url=self.driver.current_url, method="move_to_cart")
+        with allure.step("Проверка выбранного товара и переход в корзину"):
+            Logger.add_start_step(method="move_to_cart")
+            self.get_current_url()
+            self.assert_popup_title()
+            self.assert_product_name()
+            # self.assert_product_price_popup()  # цена меняется динамически, проверяется при подтверждении покупки
+            self.click_move_to_cart_button()
+            Logger.add_end_step(url=self.driver.current_url, method="move_to_cart")

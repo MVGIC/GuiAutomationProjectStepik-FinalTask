@@ -1,3 +1,4 @@
+import allure
 from faker import Faker
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -138,21 +139,21 @@ class CheckoutPage(Base):
     # Methods (Steps)
 
     def make_order(self):
-        """Оформление заказа"""
-        Logger.add_start_step(method="make_order")
-        fake = Faker()
-        self.get_current_url()
-        self.assert_checkout_title()
-        self.input_fio(fake.name())
-        self.input_phone_number(fake.phone_number())
-        self.input_email(fake.email())
-        self.click_pickup_button()
-        self.input_comment("Очень жду заказ")
-        self.click_cash_payment_button()
-        self.assert_checkout_product_name()
-        self.assert_delivery_address()
-        # self.click_checkbox_info()
-        self.force_click_checkbox()
-        self.assert_checkout_prices()
-        self.get_screenshot()
-        Logger.add_end_step(url=self.driver.current_url, method="make_order")
+        with allure.step("Оформление заказа"):
+            Logger.add_start_step(method="make_order")
+            fake = Faker()
+            self.get_current_url()
+            self.assert_checkout_title()
+            self.input_fio(fake.name())
+            self.input_phone_number(fake.phone_number())
+            self.input_email(fake.email())
+            self.click_pickup_button()
+            self.input_comment("Очень жду заказ")
+            self.click_cash_payment_button()
+            self.assert_checkout_product_name()
+            self.assert_delivery_address()
+            # self.click_checkbox_info()
+            self.force_click_checkbox()
+            self.assert_checkout_prices()
+            self.get_screenshot()
+            Logger.add_end_step(url=self.driver.current_url, method="make_order")

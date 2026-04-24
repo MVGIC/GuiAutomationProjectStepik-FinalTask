@@ -1,16 +1,14 @@
-import time
-
 from faker import Faker
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 
 class CheckoutPage(Base):
     """Класс содержащий локаторы и методы для страницы Оформления заказа"""
-
 
     # Locators
 
@@ -27,7 +25,6 @@ class CheckoutPage(Base):
     checkbox_info = "(//span[@class='radiocheck__text'])[3]"
     checkout_price = "//span[@class='m-nowrap js-order-price']"
     checkout_button = "//button[contains(text(), 'Оформить заказ')]"
-
 
     # Getters
 
@@ -83,8 +80,6 @@ class CheckoutPage(Base):
         return WebDriverWait(self.driver, 15).until(
             EC.element_to_be_clickable((By.XPATH, self.checkout_button)))
 
-
-
     # Actions
 
     def assert_checkout_title(self):
@@ -126,9 +121,13 @@ class CheckoutPage(Base):
         assert delivery_address_value == "ул. 2-я Советская, 7 Бизнес-центр «Сенатор», офис 107", "Некорректный адрес доставки"
         print("Assert delivery address value")
 
-    def click_checkbox_info(self):
-        self.get_checkbox_info().click()
-        print("Click checkbox info")
+    # def click_checkbox_info(self):
+    #     self.get_checkbox_info().click()
+    #     print("Click checkbox info")
+
+    def force_click_checkbox(self):
+        self.driver.execute_script("arguments[0].click();", self.get_checkbox_info())
+        print("Click checkbox info forced")
 
     def assert_checkout_prices(self):
         checkout_order_price_value = self.get_checkout_order_price().text
@@ -136,11 +135,11 @@ class CheckoutPage(Base):
         assert checkout_order_price_value == checkout_price_value, "Некорректная цена. Цены в заказе не совпадают."
         print("Assert checkout prices values")
 
-
     # Methods (Steps)
 
     def make_order(self):
         """Оформление заказа"""
+        Logger.add_start_step(method="make_order")
         fake = Faker()
         self.get_current_url()
         self.assert_checkout_title()
@@ -152,6 +151,8 @@ class CheckoutPage(Base):
         self.click_cash_payment_button()
         self.assert_checkout_product_name()
         self.assert_delivery_address()
-        self.click_checkbox_info()
+        # self.click_checkbox_info()
+        self.force_click_checkbox()
         self.assert_checkout_prices()
         self.get_screenshot()
+        Logger.add_end_step(url=self.driver.current_url, method="make_order")

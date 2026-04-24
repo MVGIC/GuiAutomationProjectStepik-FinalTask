@@ -5,11 +5,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 
 class SmartphonesPage(Base):
     """Класс содержащий локаторы и методы для страницы Смартфонов"""
-
 
     # Locators
 
@@ -18,7 +18,6 @@ class SmartphonesPage(Base):
     memory_filter = "//span[contains(text(),  '512GB')]"
     display_filter = "//span[contains(text(),  '6.1')]"
     add_to_cart_button = "(//button[@data-product-id='16060'])[3]"
-
 
     # Getters
 
@@ -42,7 +41,6 @@ class SmartphonesPage(Base):
         return WebDriverWait(self.driver, 15).until(
             EC.element_to_be_clickable((By.XPATH, self.add_to_cart_button)))
 
-
     # Actions
 
     def click_brand_button(self):
@@ -65,11 +63,11 @@ class SmartphonesPage(Base):
         self.get_add_to_cart_button().click()
         print("Click add to cart button")
 
-
     # Methods (Steps)
 
     def select_smartphone(self):
         """Выбор Смартфона"""
+        Logger.add_start_step(method="select_smartphone")
         self.get_current_url()
         self.driver.execute_script("window.scrollTo(0, 1200)")
         time.sleep(5)
@@ -78,3 +76,4 @@ class SmartphonesPage(Base):
         self.click_memory_filter()
         self.click_display_filter()
         self.click_add_to_cart_button()
+        Logger.add_end_step(url=self.driver.current_url, method="select_smartphone")

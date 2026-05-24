@@ -23,7 +23,7 @@ class CheckoutPage(Base):
     checkout_product_name = "//div[@class='checkout-prodcard__info']"
     checkout_order_price = "//div[@class='checkout-prodcard__price-current']"
     delivery_address = "(//div[@class='deliveryinfo__val'])[3]"
-    checkbox_info = "(//span[@class='radiocheck__text'])[3]"
+    checkbox_info = "//input[@name='confidentiality']"
     checkout_price = "//span[@class='m-nowrap js-order-price']"
     checkout_button = "//button[contains(text(), 'Оформить заказ')]"
 
@@ -127,7 +127,7 @@ class CheckoutPage(Base):
     #     print("Click checkbox info")
 
     def force_click_checkbox(self):
-        self.driver.execute_script("arguments[0].click();", self.get_checkbox_info())
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center', behavior: 'instant'});", self.get_checkbox_info())
         print("Click checkbox info forced")
 
     def assert_checkout_prices(self):
